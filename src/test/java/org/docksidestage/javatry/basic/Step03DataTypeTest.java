@@ -71,18 +71,18 @@ public class Step03DataTypeTest extends PlainTestCase {
         char miraco = 'a';
         boolean dohotel = miraco == 'a';
         if (dohotel && dstore >= piari) {
-            bonvo = sea;
-            land = (short) bonvo;
-            bonvo = piari;
-            sea = (byte) land;
+            bonvo = sea;            // 127
+            land = (short) bonvo;   // 127
+            bonvo = piari;          // 2147483647
+            sea = (byte) land;      // 127
             if (amba == 2.3D) {
-                sea = (byte) amba;
+                sea = (byte) amba;  // 2
             }
         }
         if (dstore > piari) {
             sea = 0;
         }
-        log(sea); // your answer? => 
+        log(sea); // your answer? => 2
     }
 
     // ===================================================================================
