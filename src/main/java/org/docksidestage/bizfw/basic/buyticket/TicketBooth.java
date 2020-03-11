@@ -15,6 +15,8 @@
  */
 package org.docksidestage.bizfw.basic.buyticket;
 
+import ch.qos.logback.core.pattern.SpacePadder;
+
 /**
  * @author jflute
  */
@@ -25,6 +27,7 @@ public class TicketBooth {
     //                                                                          ==========
     private static final int MAX_QUANTITY = 10;
     private static final int ONE_DAY_PRICE = 7400; // when 2019/06/15
+    private static final int TWO_DAY_PRICE = 13200;
 
     // ===================================================================================
     //                                                                           Attribute
@@ -42,17 +45,37 @@ public class TicketBooth {
     //                                                                          Buy Ticket
     //                                                                          ==========
     public void buyOneDayPassport(int handedMoney) {
+        ticketSoldOutExceptionThrower();
+        ticketShortMoneyExceptionThrower(handedMoney, ONE_DAY_PRICE);
+        --quantity;
+        updateSalesPrice(ONE_DAY_PRICE);
+    }
+
+    public Integer buyTwoDayPassport(int handedMoney) {
+        ticketSoldOutExceptionThrower();
+        ticketShortMoneyExceptionThrower(handedMoney, TWO_DAY_PRICE);
+        --quantity;
+        updateSalesPrice(TWO_DAY_PRICE);
+        return handedMoney - TWO_DAY_PRICE;
+    }
+
+    private void ticketSoldOutExceptionThrower() {
         if (quantity <= 0) {
             throw new TicketSoldOutException("Sold out");
         }
-        --quantity;
-        if (handedMoney < ONE_DAY_PRICE) {
+    }
+
+    private void ticketShortMoneyExceptionThrower(int handedMoney, int ticketPrice) {
+        if (handedMoney < ticketPrice) {
             throw new TicketShortMoneyException("Short money: " + handedMoney);
         }
+    }
+
+    private void updateSalesPrice(int ticketPrice) {
         if (salesProceeds != null) {
-            salesProceeds = salesProceeds + handedMoney;
+            salesProceeds = salesProceeds + ticketPrice;
         } else {
-            salesProceeds = handedMoney;
+            salesProceeds = ticketPrice;
         }
     }
 
