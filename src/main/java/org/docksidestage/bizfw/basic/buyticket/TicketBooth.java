@@ -15,8 +15,6 @@
  */
 package org.docksidestage.bizfw.basic.buyticket;
 
-import ch.qos.logback.core.pattern.SpacePadder;
-
 /**
  * @author jflute
  */
@@ -44,19 +42,20 @@ public class TicketBooth {
     // ===================================================================================
     //                                                                          Buy Ticket
     //                                                                          ==========
-    public void buyOneDayPassport(int handedMoney) {
+    public Ticket buyOneDayPassport(int handedMoney) {
         ticketSoldOutExceptionThrower();
         ticketShortMoneyExceptionThrower(handedMoney, ONE_DAY_PRICE);
         --quantity;
         updateSalesPrice(ONE_DAY_PRICE);
+        return new Ticket(ONE_DAY_PRICE);
     }
 
-    public Integer buyTwoDayPassport(int handedMoney) {
+    public TicketBuyResult buyTwoDayPassport(int handedMoney) {
         ticketSoldOutExceptionThrower();
         ticketShortMoneyExceptionThrower(handedMoney, TWO_DAY_PRICE);
         --quantity;
         updateSalesPrice(TWO_DAY_PRICE);
-        return handedMoney - TWO_DAY_PRICE;
+        return new TicketBuyResult(TWO_DAY_PRICE, handedMoney);
     }
 
     private void ticketSoldOutExceptionThrower() {
@@ -95,6 +94,16 @@ public class TicketBooth {
         public TicketShortMoneyException(String msg) {
             super(msg);
         }
+    }
+
+    public String judgeTicketType(Ticket ticket) {
+        int price = ticket.getDisplayPrice();
+        if (price == ONE_DAY_PRICE) {
+            return "one-day";
+        } else if (price == TWO_DAY_PRICE) {
+            return "two-day";
+        }
+        return null;
     }
 
     // ===================================================================================
