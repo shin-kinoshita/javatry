@@ -15,13 +15,7 @@
  */
 package org.docksidestage.javatry.basic;
 
-import org.docksidestage.bizfw.basic.buyticket.Ticket;
-import org.docksidestage.bizfw.basic.buyticket.TicketBooth;
-import org.docksidestage.bizfw.basic.objanimal.Animal;
-import org.docksidestage.bizfw.basic.objanimal.BarkedSound;
-import org.docksidestage.bizfw.basic.objanimal.Cat;
-import org.docksidestage.bizfw.basic.objanimal.Dog;
-import org.docksidestage.bizfw.basic.objanimal.Zombie;
+import org.docksidestage.bizfw.basic.objanimal.*;
 import org.docksidestage.bizfw.basic.objanimal.loud.AlarmClock;
 import org.docksidestage.bizfw.basic.objanimal.loud.Loudable;
 import org.docksidestage.bizfw.basic.objanimal.runner.FastRunner;
@@ -114,77 +108,77 @@ public class Step06ObjectOrientedTest extends PlainTestCase {
      * Read (analyze) this code and compare with the previous test method, and think "what is object?". <br>
      * (このコードを読んで(分析して)、一つ前のテストメソッドと比べて、「オブジェクトとは何か？」を考えてみましょう)
      */
-    public void test_objectOriented_aboutObject_usingObject() {
-        //
-        // [ticket booth info]
-        //
-        TicketBooth booth = new TicketBooth();
+    //    public void test_objectOriented_aboutObject_usingObject() {
+    //        //
+    //        // [ticket booth info]
+    //        //
+    //        TicketBooth booth = new TicketBooth();
+    //
+    //        // *booth has these properties:
+    //        //int oneDayPrice = 7400;
+    //        //int quantity = 10;
+    //        //Integer salesProceeds = null;
+    //
+    //        //
+    //        // [buy one-day passport]
+    //        //
+    //        // _/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
+    //        // #fixme you if step05 has been finished, you can use this code by jflute (2019/06/15)
+    //        // _/_/_/_/_/_/_/_/_/_/
+    //        //Ticket ticket = booth.buyOneDayPassport(10000);
+    //        booth.buyOneDayPassport(10000); // as temporary, remove if you finished steo05
+    //        Ticket ticket = new Ticket(7400); // also here
+    //
+    //        // *buyOneDayPassport() has this process:
+    //        //if (quantity <= 0) {
+    //        //    throw new TicketSoldOutException("Sold out");
+    //        //}
+    //        //if (handedMoney < oneDayPrice) {
+    //        //    throw new TicketShortMoneyException("Short money: handedMoney=" + handedMoney);
+    //        //}
+    //        //--quantity;
+    //        //salesProceeds = handedMoney;
+    //
+    //        // *ticket has these properties:
+    //        //int displayPrice = oneDayPrice;
+    //        //boolean alreadyIn = false;
+    //
+    //        // other processes here...
+    //        // ...
+    //        // ...
+    //
+    //        //
+    //        // [do in park now!!!]
+    //        //
+    //        ticket.doInPark();
+    //
+    //        // *doInPark() has this process:
+    //        //if (alreadyIn) {
+    //        //    throw new IllegalStateException("Already in park by this ticket: displayPrice=" + displayPrice);
+    //        //}
+    //        //alreadyIn = true;
+    //
+    //        //
+    //        // [final process]
+    //        //
+    //        saveBuyingHistory(booth, ticket);
+    //    }
+    //
+    //    private void saveBuyingHistory(TicketBooth booth, Ticket ticket) {
+    //        if (ticket.isAlreadyIn()) {
+    //            // only logging here (normally e.g. DB insert)
+    //            doShowTicketBooth(booth);
+    //            doShowYourTicket(ticket);
+    //        }
+    //    }
 
-        // *booth has these properties:
-        //int oneDayPrice = 7400;
-        //int quantity = 10;
-        //Integer salesProceeds = null;
-
-        //
-        // [buy one-day passport]
-        //
-        // _/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
-        // #fixme you if step05 has been finished, you can use this code by jflute (2019/06/15)
-        // _/_/_/_/_/_/_/_/_/_/
-        //Ticket ticket = booth.buyOneDayPassport(10000);
-        booth.buyOneDayPassport(10000); // as temporary, remove if you finished steo05
-        Ticket ticket = new Ticket(7400); // also here
-
-        // *buyOneDayPassport() has this process:
-        //if (quantity <= 0) {
-        //    throw new TicketSoldOutException("Sold out");
-        //}
-        //if (handedMoney < oneDayPrice) {
-        //    throw new TicketShortMoneyException("Short money: handedMoney=" + handedMoney);
-        //}
-        //--quantity;
-        //salesProceeds = handedMoney;
-
-        // *ticket has these properties:
-        //int displayPrice = oneDayPrice;
-        //boolean alreadyIn = false;
-
-        // other processes here...
-        // ...
-        // ...
-
-        //
-        // [do in park now!!!]
-        //
-        ticket.doInPark();
-
-        // *doInPark() has this process:
-        //if (alreadyIn) {
-        //    throw new IllegalStateException("Already in park by this ticket: displayPrice=" + displayPrice);
-        //}
-        //alreadyIn = true;
-
-        //
-        // [final process]
-        //
-        saveBuyingHistory(booth, ticket);
-    }
-
-    private void saveBuyingHistory(TicketBooth booth, Ticket ticket) {
-        if (ticket.isAlreadyIn()) {
-            // only logging here (normally e.g. DB insert)
-            doShowTicketBooth(booth);
-            doShowYourTicket(ticket);
-        }
-    }
-
-    private void doShowTicketBooth(TicketBooth booth) {
-        log("Ticket Booth: quantity={}, salesProceeds={}", booth.getQuantity(), booth.getSalesProceeds());
-    }
-
-    private void doShowYourTicket(Ticket ticket) {
-        log("Your Ticket: displayPrice={}, alreadyIn={}", ticket.getDisplayPrice(), ticket.isAlreadyIn());
-    }
+    //    private void doShowTicketBooth(TicketBooth booth) {
+    //        log("Ticket Booth: quantity={}, salesProceeds={}", booth.getQuantity(), booth.getSalesProceeds());
+    //    }
+    //
+    //    private void doShowYourTicket(Ticket ticket) {
+    //        log("Your Ticket: displayPrice={}, alreadyIn={}", ticket.getDisplayPrice(), ticket.isAlreadyIn());
+    //    }
 
     // ===================================================================================
     //                                                              Polymorphism Beginning

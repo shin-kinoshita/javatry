@@ -26,6 +26,7 @@ public class TicketBooth {
     private static final int MAX_QUANTITY = 10;
     private static final int ONE_DAY_PRICE = 7400; // when 2019/06/15
     private static final int TWO_DAY_PRICE = 13200;
+    private static final int FOUR_DAY_PRICE = 22400;
 
     // ===================================================================================
     //                                                                           Attribute
@@ -42,12 +43,12 @@ public class TicketBooth {
     // ===================================================================================
     //                                                                          Buy Ticket
     //                                                                          ==========
-    public Ticket buyOneDayPassport(int handedMoney) {
+    public OneDayTicket buyOneDayPassport(int handedMoney) {
         ticketSoldOutExceptionThrower();
         ticketShortMoneyExceptionThrower(handedMoney, ONE_DAY_PRICE);
         --quantity;
         updateSalesPrice(ONE_DAY_PRICE);
-        return new Ticket(ONE_DAY_PRICE);
+        return new OneDayTicket(ONE_DAY_PRICE);
     }
 
     public TicketBuyResult buyTwoDayPassport(int handedMoney) {
@@ -55,7 +56,15 @@ public class TicketBooth {
         ticketShortMoneyExceptionThrower(handedMoney, TWO_DAY_PRICE);
         --quantity;
         updateSalesPrice(TWO_DAY_PRICE);
-        return new TicketBuyResult(TWO_DAY_PRICE, handedMoney);
+        return new TicketBuyResult(TWO_DAY_PRICE, 2, handedMoney);
+    }
+
+    public TicketBuyResult buyFourDayPassport(int handedMoney) {
+        ticketSoldOutExceptionThrower();
+        ticketShortMoneyExceptionThrower(handedMoney, FOUR_DAY_PRICE);
+        --quantity;
+        updateSalesPrice(FOUR_DAY_PRICE);
+        return new TicketBuyResult(FOUR_DAY_PRICE, 4, handedMoney);
     }
 
     private void ticketSoldOutExceptionThrower() {

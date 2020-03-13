@@ -15,10 +15,8 @@
  */
 package org.docksidestage.javatry.basic;
 
-import org.docksidestage.bizfw.basic.buyticket.Ticket;
-import org.docksidestage.bizfw.basic.buyticket.TicketBooth;
+import org.docksidestage.bizfw.basic.buyticket.*;
 import org.docksidestage.bizfw.basic.buyticket.TicketBooth.TicketShortMoneyException;
-import org.docksidestage.bizfw.basic.buyticket.TicketBuyResult;
 import org.docksidestage.unit.PlainTestCase;
 
 /**
@@ -137,7 +135,7 @@ public class Step05ClassTest extends PlainTestCase {
     public void test_class_moreFix_return_ticket() {
         // comment out after modifying the method
         TicketBooth booth = new TicketBooth();
-        Ticket oneDayPassport = booth.buyOneDayPassport(10000);
+        OneDayTicket oneDayPassport = booth.buyOneDayPassport(10000);
         log(oneDayPassport.getDisplayPrice()); // should be same as one-day price
         log(oneDayPassport.isAlreadyIn()); // should be false
         oneDayPassport.doInPark();
@@ -165,8 +163,8 @@ public class Step05ClassTest extends PlainTestCase {
     public void test_class_moreFix_type() {
         // your confirmation code here
         TicketBooth booth = new TicketBooth();
-        String ticketType1 = booth.judgeTicketType(new Ticket(7400));
-        String ticketType2 = booth.judgeTicketType(new Ticket(13200));
+        String ticketType1 = booth.judgeTicketType(new OneDayTicket(7400));
+        String ticketType2 = booth.judgeTicketType(new MultiDaysTicket(13200, 2));
         log(ticketType1);
         log(ticketType2);
     }
@@ -192,6 +190,13 @@ public class Step05ClassTest extends PlainTestCase {
      */
     public void test_class_moreFix_useInterface() {
         // your confirmation code here
+        Ticket oneDayTicket = new OneDayTicket(7400);
+        Ticket twoDayTicket = new MultiDaysTicket(13200, 2);
+
+        oneDayTicket.doInPark();
+        twoDayTicket.doInPark();
+        twoDayTicket.doInPark();
+        log("pass the test");
     }
 
     /**
@@ -200,6 +205,16 @@ public class Step05ClassTest extends PlainTestCase {
      */
     public void test_class_moreFix_wonder() {
         // your confirmation code here
+        TicketBooth booth = new TicketBooth();
+        TicketBuyResult result = booth.buyFourDayPassport(22400);
+        MultiDaysTicket ticket = ((MultiDaysTicket)result.getTicket());
+        log(ticket.getDisplayPrice());
+        log(result.getChange());
+        ticket.doInPark();
+        log(ticket.isAlreadyIn());
+        ticket.doInPark();
+        ticket.doInPark();
+        ticket.doInPark();
     }
 
     /**

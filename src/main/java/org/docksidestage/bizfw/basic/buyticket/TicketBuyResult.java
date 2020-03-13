@@ -10,8 +10,8 @@ public class TicketBuyResult {
     private final Ticket ticket;
     private final int handedMoney;
 
-    public TicketBuyResult(int price, int handedMoney) {
-        this.ticket = new Ticket(price);
+    public TicketBuyResult(int price, int days, int handedMoney) {
+        this.ticket = new MultiDaysTicket(price, days);
         this.handedMoney = handedMoney;
     }
 
