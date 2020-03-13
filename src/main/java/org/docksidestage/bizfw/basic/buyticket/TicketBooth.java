@@ -43,12 +43,12 @@ public class TicketBooth {
     // ===================================================================================
     //                                                                          Buy Ticket
     //                                                                          ==========
-    public OneDayTicket buyOneDayPassport(int handedMoney) {
+    public TicketBuyResult buyOneDayPassport(int handedMoney) {
         ticketSoldOutExceptionThrower();
         ticketShortMoneyExceptionThrower(handedMoney, ONE_DAY_PRICE);
         --quantity;
         updateSalesPrice(ONE_DAY_PRICE);
-        return new OneDayTicket(ONE_DAY_PRICE);
+        return new TicketBuyResult(ONE_DAY_PRICE, 1, handedMoney);
     }
 
     public TicketBuyResult buyTwoDayPassport(int handedMoney) {

@@ -11,7 +11,7 @@ public class TicketBuyResult {
     private final int handedMoney;
 
     public TicketBuyResult(int price, int days, int handedMoney) {
-        this.ticket = new MultiDaysTicket(price, days);
+        this.ticket = days == 1 ? new OneDayTicket(price) : new MultiDaysTicket(price, days);
         this.handedMoney = handedMoney;
     }
 

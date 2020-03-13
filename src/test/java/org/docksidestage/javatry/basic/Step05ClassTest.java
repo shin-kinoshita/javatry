@@ -135,11 +135,11 @@ public class Step05ClassTest extends PlainTestCase {
     public void test_class_moreFix_return_ticket() {
         // comment out after modifying the method
         TicketBooth booth = new TicketBooth();
-        OneDayTicket oneDayPassport = booth.buyOneDayPassport(10000);
-        log(oneDayPassport.getDisplayPrice()); // should be same as one-day price
-        log(oneDayPassport.isAlreadyIn()); // should be false
-        oneDayPassport.doInPark();
-        log(oneDayPassport.isAlreadyIn()); // should be true
+        OneDayTicket ticket = ((OneDayTicket) booth.buyOneDayPassport(10000).getTicket());
+        log(ticket.getDisplayPrice()); // should be same as one-day price
+        log(ticket.isAlreadyIn()); // should be false
+        ticket.doInPark();
+        log(ticket.isAlreadyIn()); // should be true
     }
 
     /**
@@ -149,8 +149,7 @@ public class Step05ClassTest extends PlainTestCase {
     public void test_class_moreFix_return_whole() {
         // comment out after modifying the method
         TicketBooth booth = new TicketBooth();
-        int handedMoney = 20000;
-        TicketBuyResult twoDayPassportResult = booth.buyTwoDayPassport(handedMoney);
+        TicketBuyResult twoDayPassportResult = booth.buyTwoDayPassport(20000);
         Ticket twoDayPassport = twoDayPassportResult.getTicket();
         int change = twoDayPassportResult.getChange();
         log(twoDayPassport.getDisplayPrice() + change); // should be same as money
@@ -163,8 +162,10 @@ public class Step05ClassTest extends PlainTestCase {
     public void test_class_moreFix_type() {
         // your confirmation code here
         TicketBooth booth = new TicketBooth();
-        String ticketType1 = booth.judgeTicketType(new OneDayTicket(7400));
-        String ticketType2 = booth.judgeTicketType(new MultiDaysTicket(13200, 2));
+        Ticket ticket1 = new OneDayTicket(7400);
+        Ticket ticket2 = new MultiDaysTicket(13200, 2);
+        String ticketType1 = booth.judgeTicketType(ticket1);
+        String ticketType2 = booth.judgeTicketType(ticket2);
         log(ticketType1);
         log(ticketType2);
     }
@@ -190,12 +191,15 @@ public class Step05ClassTest extends PlainTestCase {
      */
     public void test_class_moreFix_useInterface() {
         // your confirmation code here
-        Ticket oneDayTicket = new OneDayTicket(7400);
-        Ticket twoDayTicket = new MultiDaysTicket(13200, 2);
+        TicketBooth booth = new TicketBooth();
+        TicketBuyResult oneDayResult = booth.buyOneDayPassport(7400);
+        TicketBuyResult twoDaysResult = booth.buyTwoDayPassport(22400);
+        Ticket oneDayTicket = oneDayResult.getTicket();
+        Ticket twoDaysTicket = twoDaysResult.getTicket();
 
         oneDayTicket.doInPark();
-        twoDayTicket.doInPark();
-        twoDayTicket.doInPark();
+        twoDaysTicket.doInPark();
+        twoDaysTicket.doInPark();
         log("pass the test");
     }
 
@@ -207,7 +211,7 @@ public class Step05ClassTest extends PlainTestCase {
         // your confirmation code here
         TicketBooth booth = new TicketBooth();
         TicketBuyResult result = booth.buyFourDayPassport(22400);
-        MultiDaysTicket ticket = ((MultiDaysTicket)result.getTicket());
+        MultiDaysTicket ticket = ((MultiDaysTicket) result.getTicket());
         log(ticket.getDisplayPrice());
         log(result.getChange());
         ticket.doInPark();
