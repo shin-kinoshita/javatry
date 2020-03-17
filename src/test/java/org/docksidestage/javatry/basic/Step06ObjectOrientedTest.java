@@ -15,6 +15,8 @@
  */
 package org.docksidestage.javatry.basic;
 
+import org.docksidestage.bizfw.basic.buyticket.OneDayTicket;
+import org.docksidestage.bizfw.basic.buyticket.TicketBooth;
 import org.docksidestage.bizfw.basic.objanimal.*;
 import org.docksidestage.bizfw.basic.objanimal.loud.AlarmClock;
 import org.docksidestage.bizfw.basic.objanimal.loud.Loudable;
@@ -64,7 +66,7 @@ public class Step06ObjectOrientedTest extends PlainTestCase {
         //
         // [ticket info]
         //
-        int displayPrice = quantity;
+        int displayPrice = oneDayPrice;
         boolean alreadyIn = false;
 
         // other processes here...
@@ -75,21 +77,21 @@ public class Step06ObjectOrientedTest extends PlainTestCase {
         // [do in park now!!!]
         //
         if (alreadyIn) {
-            throw new IllegalStateException("Already in park by this ticket: displayPrice=" + quantity);
+            throw new IllegalStateException("Already in park by this ticket: displayPrice=" + displayPrice);
         }
         alreadyIn = true;
 
         //
         // [final process]
         //
-        saveBuyingHistory(quantity, displayPrice, salesProceeds, alreadyIn);
+        saveBuyingHistory(quantity, salesProceeds, displayPrice, alreadyIn);
     }
 
     private void saveBuyingHistory(int quantity, Integer salesProceeds, int displayPrice, boolean alreadyIn) {
         if (alreadyIn) {
             // only logging here (normally e.g. DB insert)
-            showTicketBooth(displayPrice, salesProceeds);
-            showYourTicket(quantity, alreadyIn);
+            showTicketBooth(quantity, salesProceeds);
+            showYourTicket(displayPrice, alreadyIn);
         }
     }
 
@@ -108,77 +110,85 @@ public class Step06ObjectOrientedTest extends PlainTestCase {
      * Read (analyze) this code and compare with the previous test method, and think "what is object?". <br>
      * (このコードを読んで(分析して)、一つ前のテストメソッドと比べて、「オブジェクトとは何か？」を考えてみましょう)
      */
-    //    public void test_objectOriented_aboutObject_usingObject() {
-    //        //
-    //        // [ticket booth info]
-    //        //
-    //        TicketBooth booth = new TicketBooth();
-    //
-    //        // *booth has these properties:
-    //        //int oneDayPrice = 7400;
-    //        //int quantity = 10;
-    //        //Integer salesProceeds = null;
-    //
-    //        //
-    //        // [buy one-day passport]
-    //        //
-    //        // _/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
-    //        // #fixme you if step05 has been finished, you can use this code by jflute (2019/06/15)
-    //        // _/_/_/_/_/_/_/_/_/_/
-    //        //Ticket ticket = booth.buyOneDayPassport(10000);
-    //        booth.buyOneDayPassport(10000); // as temporary, remove if you finished steo05
-    //        Ticket ticket = new Ticket(7400); // also here
-    //
-    //        // *buyOneDayPassport() has this process:
-    //        //if (quantity <= 0) {
-    //        //    throw new TicketSoldOutException("Sold out");
-    //        //}
-    //        //if (handedMoney < oneDayPrice) {
-    //        //    throw new TicketShortMoneyException("Short money: handedMoney=" + handedMoney);
-    //        //}
-    //        //--quantity;
-    //        //salesProceeds = handedMoney;
-    //
-    //        // *ticket has these properties:
-    //        //int displayPrice = oneDayPrice;
-    //        //boolean alreadyIn = false;
-    //
-    //        // other processes here...
-    //        // ...
-    //        // ...
-    //
-    //        //
-    //        // [do in park now!!!]
-    //        //
-    //        ticket.doInPark();
-    //
-    //        // *doInPark() has this process:
-    //        //if (alreadyIn) {
-    //        //    throw new IllegalStateException("Already in park by this ticket: displayPrice=" + displayPrice);
-    //        //}
-    //        //alreadyIn = true;
-    //
-    //        //
-    //        // [final process]
-    //        //
-    //        saveBuyingHistory(booth, ticket);
-    //    }
-    //
-    //    private void saveBuyingHistory(TicketBooth booth, Ticket ticket) {
-    //        if (ticket.isAlreadyIn()) {
-    //            // only logging here (normally e.g. DB insert)
-    //            doShowTicketBooth(booth);
-    //            doShowYourTicket(ticket);
-    //        }
-    //    }
+    public void test_objectOriented_aboutObject_usingObject() {
+        // _/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
+        // [考察]
+        // 物として考えるということ、本質的には隠蔽化。
+        // オブジェクト指向を取り入れるのは、事象を説明するために命名・言語化することで理解しやすくすることに近い。
+        // 事象をそのまま説明しようとしても、時間がかかりすぎるしよく分からなくなってしまう。
+        // 例えば「チケット」というものを説明しようとすると、紙でできていて、値段が7400円で、入場するために必要なもので、10枚までしか手に入らないもの、、みたいな感じになる。
+        // いろんな特徴や機能を持っているけど、毎回説明するのが面倒で理解するのも時間がかかるから命名することになる、「チケット」って。
+        // _/_/_/_/_/_/_/_/_/_/
+        //
+        // [ticket booth info]
+        //
+        TicketBooth booth = new TicketBooth();
 
-    //    private void doShowTicketBooth(TicketBooth booth) {
-    //        log("Ticket Booth: quantity={}, salesProceeds={}", booth.getQuantity(), booth.getSalesProceeds());
-    //    }
-    //
-    //    private void doShowYourTicket(Ticket ticket) {
-    //        log("Your Ticket: displayPrice={}, alreadyIn={}", ticket.getDisplayPrice(), ticket.isAlreadyIn());
-    //    }
+        // *booth has these properties:
+        //int oneDayPrice = 7400;
+        //int quantity = 10;
+        //Integer salesProceeds = null;
+
+        //
+        // [buy one-day passport]
+        //
+        // _/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
+        // #fixme you if step05 has been finished, you can use this code by jflute (2019/06/15)
+        // _/_/_/_/_/_/_/_/_/_/
+        //Ticket ticket = booth.buyOneDayPassport(10000);
+        booth.buyOneDayPassport(10000); // as temporary, remove if you finished steo05
+        OneDayTicket ticket = new OneDayTicket(7400); // also here
+
+        // *buyOneDayPassport() has this process:
+        //if (quantity <= 0) {
+        //    throw new TicketSoldOutException("Sold out");
+        //}
+        //if (handedMoney < oneDayPrice) {
+        //    throw new TicketShortMoneyException("Short money: handedMoney=" + handedMoney);
+        //}
+        //--quantity;
+        //salesProceeds = handedMoney;
+
+        // *ticket has these properties:
+        //int displayPrice = oneDayPrice;
+        //boolean alreadyIn = false;
+
+        // other processes here...
+        // ...
+        // ...
+
+        //
+        // [do in park now!!!]
+        //
+        ticket.doInPark();
+
+        // *doInPark() has this process:
+        //if (alreadyIn) {
+        //    throw new IllegalStateException("Already in park by this ticket: displayPrice=" + displayPrice);
+        //}
+        //alreadyIn = true;
+
+        //
+        // [final process]
+        //
+        saveBuyingHistory(booth, ticket);
+    }
+
+    private void saveBuyingHistory(TicketBooth booth, OneDayTicket ticket) {
+        if (ticket.isAlreadyIn()) {
+            // only logging here (normally e.g. DB insert)
+            doShowTicketBooth(booth);
+            doShowYourTicket(ticket);
+        }
+    }
+
+    private void doShowTicketBooth(TicketBooth booth) {
+        log("Ticket Booth: quantity={}, salesProceeds={}", booth.getQuantity(), booth.getSalesProceeds());
+    }
+
+    private void doShowYourTicket(OneDayTicket ticket) {
+        log("Your Ticket: displayPrice={}, alreadyIn={}", ticket.getDisplayPrice(), ticket.isAlreadyIn());
+    }
 
     // ===================================================================================
     //                                                              Polymorphism Beginning
