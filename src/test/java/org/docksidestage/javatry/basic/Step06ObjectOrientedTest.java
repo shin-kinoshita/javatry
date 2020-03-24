@@ -22,6 +22,7 @@ import org.docksidestage.bizfw.basic.objanimal.loud.AlarmClock;
 import org.docksidestage.bizfw.basic.objanimal.loud.Loudable;
 import org.docksidestage.bizfw.basic.objanimal.runner.FastRunner;
 import org.docksidestage.unit.PlainTestCase;
+import org.omg.CORBA.FREE_MEM;
 
 /**
  * The test of object-oriented. <br>
@@ -304,7 +305,7 @@ public class Step06ObjectOrientedTest extends PlainTestCase {
         Animal animal = new Dog();
         boolean isRunner = animal instanceof FastRunner;
         log(isRunner); // your answer? => true
-        ((Dog)animal).run();
+        ((Dog) animal).run();
         log("done");
     }
 
@@ -317,6 +318,13 @@ public class Step06ObjectOrientedTest extends PlainTestCase {
      */
     public void test_objectOriented_polymorphism_makeConcrete() {
         // your confirmation code here
+        Animal animal = new Pig();
+        BarkedSound sound = animal.bark();
+        String barkWord = sound.getBarkWord();
+        log(barkWord); // bu-bu-bu---
+        assertException(IllegalStateException.class, () -> {
+            animal.bark();
+        });
     }
 
     /**
@@ -325,6 +333,11 @@ public class Step06ObjectOrientedTest extends PlainTestCase {
      */
     public void test_objectOriented_polymorphism_makeInterface() {
         // your confirmation code here
+        Animal animal = new Fawn();
+        BarkedSound sound = animal.bark();
+        String barkWord = sound.getBarkWord();
+        log(barkWord); // myu-n myu-n fuu....
+        ((FastRunner)animal).run();
     }
 
     // ===================================================================================
