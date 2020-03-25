@@ -21,8 +21,14 @@ import org.docksidestage.bizfw.basic.objanimal.*;
 import org.docksidestage.bizfw.basic.objanimal.loud.AlarmClock;
 import org.docksidestage.bizfw.basic.objanimal.loud.Loudable;
 import org.docksidestage.bizfw.basic.objanimal.runner.FastRunner;
+import org.docksidestage.javatry.basic.st6.dbms.St6MySql;
+import org.docksidestage.javatry.basic.st6.dbms.St6PostgreSql;
+import org.docksidestage.javatry.basic.st6.os.St6MacOperationSystem;
+import org.docksidestage.javatry.basic.st6.os.St6OldWindowsOperationSystem;
+import org.docksidestage.javatry.basic.st6.os.St6OperationSystem;
+import org.docksidestage.javatry.basic.st6.os.St6WindowsOperationSystem;
 import org.docksidestage.unit.PlainTestCase;
-import org.omg.CORBA.FREE_MEM;
+import sun.lwawt.SecurityWarningWindow;
 
 /**
  * The test of object-oriented. <br>
@@ -337,7 +343,7 @@ public class Step06ObjectOrientedTest extends PlainTestCase {
         BarkedSound sound = animal.bark();
         String barkWord = sound.getBarkWord();
         log(barkWord); // myu-n myu-n fuu....
-        ((FastRunner)animal).run();
+        ((FastRunner) animal).run();
     }
 
     // ===================================================================================
@@ -349,6 +355,10 @@ public class Step06ObjectOrientedTest extends PlainTestCase {
      */
     public void test_objectOriented_writing_generalization_extractToAbstract() {
         // your confirmation code here
+        St6MySql mysql = new St6MySql();
+        St6PostgreSql postgreSql = new St6PostgreSql();
+        log(mysql.buildPagingQuery(1, 2));
+        log(postgreSql.buildPagingQuery(1, 2));
     }
 
     /**
@@ -357,6 +367,12 @@ public class Step06ObjectOrientedTest extends PlainTestCase {
      */
     public void test_objectOriented_writing_specialization_extractToConcrete() {
         // your confirmation code here
+        St6MacOperationSystem macOS = new St6MacOperationSystem("maco");
+        log(macOS.buildUserResourcePath("xxx"));
+        St6WindowsOperationSystem windowsOS = new St6WindowsOperationSystem("winy");
+        log(windowsOS.buildUserResourcePath("yyy"));
+        St6OldWindowsOperationSystem oldWindowsOS = new St6OldWindowsOperationSystem("olwins");
+        log(oldWindowsOS.buildUserResourcePath("zzz"));
     }
 
     // ===================================================================================

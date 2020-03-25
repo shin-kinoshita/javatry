@@ -43,13 +43,6 @@ public class St6OperationSystem {
     // ===================================================================================
     //                                                                      User Directory
     //                                                                      ==============
-    public String buildUserResourcePath(String relativePath) {
-        String fileSeparator = getFileSeparator();
-        String userDirectory = getUserDirectory();
-        String resourcePath = userDirectory + fileSeparator + relativePath;
-        return resourcePath.replace("/", fileSeparator);
-    }
-
     protected String getFileSeparator() {
         if (OS_TYPE_MAC.equalsIgnoreCase(osType)) {
             return "/";
