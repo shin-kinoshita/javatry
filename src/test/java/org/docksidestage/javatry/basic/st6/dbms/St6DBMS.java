@@ -3,7 +3,7 @@ package org.docksidestage.javatry.basic.st6.dbms;
 /**
  * @author subaru
  */
-public abstract class St6AbstractSql {
+public abstract class St6DBMS {
     abstract String generatePagingQuery(int pageSize, int offset);
 
     public String buildPagingQuery(int pageSize, int pageNumber) {
