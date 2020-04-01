@@ -25,10 +25,8 @@ import org.docksidestage.javatry.basic.st6.dbms.St6MySql;
 import org.docksidestage.javatry.basic.st6.dbms.St6PostgreSql;
 import org.docksidestage.javatry.basic.st6.os.St6MacOperationSystem;
 import org.docksidestage.javatry.basic.st6.os.St6OldWindowsOperationSystem;
-import org.docksidestage.javatry.basic.st6.os.St6OperationSystem;
 import org.docksidestage.javatry.basic.st6.os.St6WindowsOperationSystem;
 import org.docksidestage.unit.PlainTestCase;
-import sun.lwawt.SecurityWarningWindow;
 
 /**
  * The test of object-oriented. <br>
@@ -384,6 +382,11 @@ public class Step06ObjectOrientedTest extends PlainTestCase {
      */
     public void test_objectOriented_writing_withDelegation() {
         // your confirmation code here
+        log((new Cat()).bark().getBarkWord());
+        log((new Dog()).bark().getBarkWord());
+        log((new Fawn()).bark().getBarkWord());
+        log((new Pig()).bark().getBarkWord());
+        log((new Zombie()).bark().getBarkWord());
     }
 
     /**

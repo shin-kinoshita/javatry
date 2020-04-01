@@ -34,27 +34,29 @@ public abstract class Animal implements Loudable {
     //                                                                           Attribute
     //                                                                           =========
     protected int hitPoint;
+    protected BarkingProcess barkingProcess;
 
     // ===================================================================================
     //                                                                         Constructor
     //                                                                         ===========
     public Animal() {
         hitPoint = getInitialHitPoint();
+        barkingProcess = getBarkingProcess();
     }
 
     protected int getInitialHitPoint() {
         return 10; // as default
     }
 
+    protected BarkingProcess getBarkingProcess() {
+        return new BarkingProcess(this);
+    }
+
     // ===================================================================================
     //                                                                               Bark
     //                                                                              ======
     public BarkedSound bark() {
-        breatheIn();
-        prepareAbdominalMuscle();
-        String barkWord = getBarkWord();
-        BarkedSound barkedSound = doBark(barkWord);
-        return barkedSound;
+        return barkingProcess.doBark();
     }
 
     protected void prepareAbdominalMuscle() {

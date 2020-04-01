@@ -16,6 +16,7 @@
 package org.docksidestage.bizfw.di.cast;
 
 import org.docksidestage.bizfw.basic.objanimal.BarkedSound;
+import org.docksidestage.bizfw.basic.objanimal.BarkingProcess;
 import org.docksidestage.bizfw.basic.objanimal.Cat;
 import org.docksidestage.bizfw.basic.objanimal.Dog;
 
@@ -41,16 +42,21 @@ public class TooLazyDog extends Dog {
     }
 
     @Override
-    public BarkedSound bark() {
-        if (feed == null) {
-            throw new IllegalStateException("Hungry?");
-        }
-        if (!goodMood) {
-            throw new IllegalStateException("Bad mood");
-        }
-        if (friendCat == null) {
-            throw new IllegalStateException("Lonely");
-        }
-        return friendCat.bark();
+    protected BarkingProcess getBarkingProcess() {
+        return new BarkingProcess(this) {
+            @Override
+            protected BarkedSound doBark() {
+                if (feed == null) {
+                    throw new IllegalStateException("Hungry?");
+                }
+                if (!goodMood) {
+                    throw new IllegalStateException("Bad mood");
+                }
+                if (friendCat == null) {
+                    throw new IllegalStateException("Lonely");
+                }
+                return friendCat.bark();
+            }
+        };
     }
 }
