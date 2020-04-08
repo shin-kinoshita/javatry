@@ -68,7 +68,7 @@ public class Step08Java8FunctionTest extends PlainTestCase {
         log("...Executing lambda expression style callback");
         helpCallbackConsumer(stage -> log(stage + ": " + title));
 
-        // your answer? => 
+        // your answer? => yes
 
         // cannot reassign because it is used at callback process
         //title = "wave";
@@ -84,7 +84,7 @@ public class Step08Java8FunctionTest extends PlainTestCase {
             log(stage);
         });
         log("lost river");
-        // your answer? => 
+        // your answer? => harbar, broadway, dockside, hangar, lost river
     }
 
     private class St8BasicConsumer implements Consumer<String> {
@@ -116,7 +116,7 @@ public class Step08Java8FunctionTest extends PlainTestCase {
         String sea = helpCallbackFunction(number -> {
             return label + ": " + number;
         });
-        log(sea); // your answer? => 
+        log(sea); // your answer? => number: 7
     }
 
     private String helpCallbackFunction(Function<Integer, String> oneArgLambda) {
@@ -141,17 +141,16 @@ public class Step08Java8FunctionTest extends PlainTestCase {
      * </pre>
      */
     public void test_java8_lambda_convertStyle_basic() {
-        helpCallbackSupplier(new Supplier<String>() { // sea
-            public String get() {
-                return "broadway";
-            }
+        // sea
+        helpCallbackSupplier(() -> {
+            return "broadway";
         });
-
-        helpCallbackSupplier(() -> { // land
-            return "dockside";
+        // land
+        helpCallbackSupplier(() -> "dockside");
+        // piari
+        helpCallbackSupplier(() -> {
+            return "hangar";
         });
-
-        helpCallbackSupplier(() -> "hangar"); // piari
     }
 
     private void helpCallbackSupplier(Supplier<String> oneArgLambda) {
