@@ -15,10 +15,14 @@
  */
 package org.docksidestage.javatry.colorbox;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import org.docksidestage.bizfw.colorbox.ColorBox;
 import org.docksidestage.bizfw.colorbox.color.BoxColor;
+import org.docksidestage.bizfw.colorbox.space.BoxSpace;
 import org.docksidestage.bizfw.colorbox.yours.YourPrivateRoom;
 import org.docksidestage.unit.PlainTestCase;
 
@@ -60,6 +64,17 @@ public class Step11ClassicStringTest extends PlainTestCase {
      * (カラーボックスに入ってる文字列の中で、一番長い文字列は？)
      */
     public void test_length_findMax() {
+        List<ColorBox> colorBoxList = new YourPrivateRoom().getColorBoxList();
+        String longestString = null;
+        for (ColorBox colorBox : colorBoxList) {
+            for (BoxSpace boxSpace : colorBox.getSpaceList()) {
+                Object content = boxSpace.getContent();
+                if (content instanceof String && (longestString == null || ((String) content).length() > longestString.length())) {
+                    longestString = ((String) content);
+                }
+            }
+        }
+        log(longestString + "(" + longestString.length() + ")");
     }
 
     /**
@@ -67,6 +82,20 @@ public class Step11ClassicStringTest extends PlainTestCase {
      * (カラーボックスに入ってる文字列の中で、一番長いものと短いものの差は何文字？)
      */
     public void test_length_findMaxMinDiff() {
+        List<ColorBox> colorBoxList = new YourPrivateRoom().getColorBoxList();
+        String longestColor = null;
+        String shortestColor = null;
+        for (ColorBox colorBox : colorBoxList) {
+            String colorName = colorBox.getColor().getColorName();
+            if (longestColor == null || colorName.length() > longestColor.length()) {
+                longestColor = colorName;
+            }
+            if (shortestColor == null || colorName.length() < shortestColor.length()) {
+                shortestColor = colorName;
+            }
+        }
+        int answer = longestColor.length() - shortestColor.length();
+        log(answer + "(longestColor: " + longestColor + ", shortestColor: " + shortestColor + ")"); // also show name for visual check
     }
 
     /**
@@ -74,6 +103,23 @@ public class Step11ClassicStringTest extends PlainTestCase {
      * (カラーボックスに入ってる値 (文字列以外はtoString()) の中で、二番目に長い文字列は？ (ソートなしで))
      */
     public void test_length_findSecondMax() {
+        List<ColorBox> colorBoxList = new YourPrivateRoom().getColorBoxList();
+        ArrayList<Object> contentList = new ArrayList<>();
+        for (ColorBox colorBox : colorBoxList) {
+            for (BoxSpace boxSpace : colorBox.getSpaceList()) {
+                if (boxSpace.getContent() != null) {
+                    contentList.add(boxSpace.getContent());
+                }
+            }
+        }
+        Collections.sort(contentList, new Comparator<Object>() {
+            @Override
+            public int compare(Object o1, Object o2) {
+                return o2.toString().length() - o1.toString().length();
+            }
+        });
+        String answer = contentList.get(1).toString();
+        log(answer + "(" + answer.length() + ")");
     }
 
     /**
@@ -81,6 +127,16 @@ public class Step11ClassicStringTest extends PlainTestCase {
      * (カラーボックスに入ってる文字列の長さの合計は？)
      */
     public void test_length_calculateLengthSum() {
+        List<ColorBox> colorBoxList = new YourPrivateRoom().getColorBoxList();
+        int sumLength = 0;
+        for (ColorBox colorBox : colorBoxList) {
+            for (BoxSpace boxSpace : colorBox.getSpaceList()) {
+                if (boxSpace.getContent() != null && boxSpace.getContent() instanceof String) {
+                    sumLength += ((String) boxSpace.getContent()).length();
+                }
+            }
+        }
+        log(sumLength);
     }
 
     /**
@@ -88,6 +144,15 @@ public class Step11ClassicStringTest extends PlainTestCase {
      * (カラーボックスの中で、色の名前が一番長いものは？)
      */
     public void test_length_findMaxColorSize() {
+        List<ColorBox> colorBoxList = new YourPrivateRoom().getColorBoxList();
+        String longestColor = null;
+        for (ColorBox colorBox : colorBoxList) {
+            String colorName = colorBox.getColor().getColorName();
+            if (longestColor == null || colorName.length() > longestColor.length()) {
+                longestColor = colorName;
+            }
+        }
+        log(longestColor + "(" + longestColor.length() + ")");
     }
 
     // ===================================================================================
