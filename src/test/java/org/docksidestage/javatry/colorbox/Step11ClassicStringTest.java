@@ -202,6 +202,21 @@ public class Step11ClassicStringTest extends PlainTestCase {
      * (カラーボックスに入ってる "front" で終わる文字列で、最初の "front" は何文字目から始まる？)
      */
     public void test_indexOf_findIndex() {
+        List<ColorBox> colorBoxList = new YourPrivateRoom().getColorBoxList();
+        String frontEndStr = null;
+        for (ColorBox colorBox : colorBoxList) {
+            for (BoxSpace boxSpace : colorBox.getSpaceList()) {
+                Object content = boxSpace.getContent();
+                if (content instanceof String && ((String) content).endsWith("front")) {
+                    frontEndStr = (String) content;
+                }
+            }
+        }
+        if (frontEndStr != null) {
+            log((frontEndStr.indexOf("front") + 1) + "(" + frontEndStr + ")");
+        } else {
+            log("*not found");
+        }
     }
 
     /**
@@ -209,6 +224,22 @@ public class Step11ClassicStringTest extends PlainTestCase {
      * (カラーボックスに入ってる「ど」を二つ以上含む文字列で、最後の「ど」は何文字目から始まる？ (e.g. "どんどん" => 3))
      */
     public void test_lastIndexOf_findIndex() {
+        List<ColorBox> colorBoxList = new YourPrivateRoom().getColorBoxList();
+        String doContainStr = null;
+        final String doStr = "ど";
+        for (ColorBox colorBox : colorBoxList) {
+            for (BoxSpace boxSpace : colorBox.getSpaceList()) {
+                Object content = boxSpace.getContent();
+                if (content instanceof String && ((String) content).indexOf(doStr, ((String) content).indexOf(doStr)) > -1) {
+                    doContainStr = (String) content;
+                }
+            }
+        }
+        if (doContainStr != null) {
+            log((doContainStr.lastIndexOf(doStr) + 1) + "(" + doContainStr + ")");
+        } else {
+            log("*not found");
+        }
     }
 
     // ===================================================================================
