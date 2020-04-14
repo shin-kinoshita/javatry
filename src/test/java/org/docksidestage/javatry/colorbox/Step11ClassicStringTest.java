@@ -250,6 +250,21 @@ public class Step11ClassicStringTest extends PlainTestCase {
      * (カラーボックスに入ってる "front" で終わる文字列の最初の一文字は？)
      */
     public void test_substring_findFirstChar() {
+        List<ColorBox> colorBoxList = new YourPrivateRoom().getColorBoxList();
+        String frontEndStr = null;
+        for (ColorBox colorBox : colorBoxList) {
+            for (BoxSpace boxSpace : colorBox.getSpaceList()) {
+                Object content = boxSpace.getContent();
+                if (content instanceof String && ((String) content).endsWith("front")) {
+                    frontEndStr = (String) content;
+                }
+            }
+        }
+        if (frontEndStr != null) {
+            log(frontEndStr.substring(0, 1) + "(" + frontEndStr + ")");
+        } else {
+            log("*not found");
+        }
     }
 
     /**
@@ -257,6 +272,21 @@ public class Step11ClassicStringTest extends PlainTestCase {
      * (カラーボックスに入ってる "Water" で始まる文字列の最後の一文字は？)
      */
     public void test_substring_findLastChar() {
+        List<ColorBox> colorBoxList = new YourPrivateRoom().getColorBoxList();
+        String waterStartStr = null;
+        for (ColorBox colorBox : colorBoxList) {
+            for (BoxSpace boxSpace : colorBox.getSpaceList()) {
+                Object content = boxSpace.getContent();
+                if (content instanceof String && ((String) content).startsWith("Water")) {
+                    waterStartStr = (String) content;
+                }
+            }
+        }
+        if (waterStartStr != null) {
+            log(waterStartStr.substring(waterStartStr.length() - 1) + "(" + waterStartStr + ")");
+        } else {
+            log("*not found");
+        }
     }
 
     // ===================================================================================
