@@ -328,7 +328,7 @@ public class Step11ClassicStringTest extends PlainTestCase {
             for (BoxSpace boxSpace : colorBox.getSpaceList()) {
                 Object content = boxSpace.getContent();
                 if (content instanceof File) {
-                    pathString = ((File)content).getPath();
+                    pathString = ((File) content).getPath();
                 }
             }
         }
@@ -347,6 +347,25 @@ public class Step11ClassicStringTest extends PlainTestCase {
      * (カラーボックスの中に入っているDevilBoxクラスのtextの長さの合計は？)
      */
     public void test_welcomeToDevil() {
+        List<ColorBox> colorBoxList = new YourPrivateRoom().getColorBoxList();
+        int textLengthSum = 0;
+        for (ColorBox colorBox : colorBoxList) {
+            for (BoxSpace boxSpace : colorBox.getSpaceList()) {
+                Object content = boxSpace.getContent();
+                if (content instanceof YourPrivateRoom.DevilBox) {
+                    try {
+                        YourPrivateRoom.DevilBox devilBox = (YourPrivateRoom.DevilBox) content;
+                        devilBox.wakeUp();
+                        devilBox.allowMe();
+                        devilBox.open();
+                        textLengthSum += devilBox.getText().length();
+                    } catch (YourPrivateRoom.DevilBoxTextNotFoundException e) {
+                        log("DevilBoxTextNotFoundException is thrown");
+                    }
+                }
+            }
+        }
+        log(textLengthSum);
     }
 
     // ===================================================================================
