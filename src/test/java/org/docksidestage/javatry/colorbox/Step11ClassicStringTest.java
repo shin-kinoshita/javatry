@@ -15,6 +15,7 @@
  */
 package org.docksidestage.javatry.colorbox;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -297,6 +298,23 @@ public class Step11ClassicStringTest extends PlainTestCase {
      * (カラーボックスに入ってる "o" (おー) を含んだ文字列から "o" を全て除去したら何文字？)
      */
     public void test_replace_remove_o() {
+        List<ColorBox> colorBoxList = new YourPrivateRoom().getColorBoxList();
+        String oContainStr = null;
+        final String oStr = "o";
+        for (ColorBox colorBox : colorBoxList) {
+            for (BoxSpace boxSpace : colorBox.getSpaceList()) {
+                Object content = boxSpace.getContent();
+                if (content instanceof String && ((String) content).contains(oStr)) {
+                    oContainStr = (String) content;
+                }
+            }
+        }
+        if (oContainStr != null) {
+            String oRemevedStr = oContainStr.replaceAll(oStr, "");
+            log(oRemevedStr.length() + "(" + oRemevedStr + ")");
+        } else {
+            log("*not found");
+        }
     }
 
     /**
@@ -304,6 +322,21 @@ public class Step11ClassicStringTest extends PlainTestCase {
      * カラーボックスに入ってる java.io.File のパス文字列のファイルセパレーターの "/" を、Windowsのファイルセパレーターに置き換えた文字列は？
      */
     public void test_replace_fileseparator() {
+        List<ColorBox> colorBoxList = new YourPrivateRoom().getColorBoxList();
+        String pathString = null;
+        for (ColorBox colorBox : colorBoxList) {
+            for (BoxSpace boxSpace : colorBox.getSpaceList()) {
+                Object content = boxSpace.getContent();
+                if (content instanceof File) {
+                    pathString = ((File)content).getPath();
+                }
+            }
+        }
+        if (pathString != null) {
+            log(pathString.replaceAll("/", "\\\\"));
+        } else {
+            log("*not found");
+        }
     }
 
     // ===================================================================================
