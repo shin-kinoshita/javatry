@@ -23,6 +23,8 @@ import java.util.List;
 
 import org.docksidestage.bizfw.colorbox.ColorBox;
 import org.docksidestage.bizfw.colorbox.color.BoxColor;
+import org.docksidestage.bizfw.colorbox.impl.CompactColorBox;
+import org.docksidestage.bizfw.colorbox.impl.StandardColorBox;
 import org.docksidestage.bizfw.colorbox.space.BoxSpace;
 import org.docksidestage.bizfw.colorbox.yours.YourPrivateRoom;
 import org.docksidestage.unit.PlainTestCase;
@@ -393,6 +395,25 @@ public class Step11ClassicStringTest extends PlainTestCase {
      * (whiteのカラーボックスのupperスペースに入っているSecretBoxクラスのtextをMapに変換してtoString()すると？)
      */
     public void test_parseMap_flat() {
+        List<ColorBox> colorBoxList = new YourPrivateRoom().getColorBoxList();
+        String targetString = null;
+        for (ColorBox colorBox : colorBoxList) {
+            if (!"white".equals(colorBox.getColor().getColorName())) {
+                continue;
+            }
+            if (colorBox instanceof CompactColorBox) {
+                Object content = ((CompactColorBox) colorBox).getUpperSpace().getContent();
+                if (content instanceof YourPrivateRoom.SecretBox) {
+                    targetString = ((YourPrivateRoom.SecretBox) content).getText();
+                }
+            }
+            if (colorBox instanceof StandardColorBox) {
+                Object content = ((StandardColorBox) colorBox).getUpperSpace().getContent();
+                if (content instanceof YourPrivateRoom.SecretBox) {
+                    targetString = ((YourPrivateRoom.SecretBox) content).getText();
+                }
+            }
+        }
     }
 
     /**
