@@ -165,9 +165,12 @@ public class Step07ExceptionTest extends PlainTestCase {
             // _/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
             // What happens? Write situation and cause here. (何が起きた？状況と原因をここに書いてみましょう)
             // - - - - - - - - - -
-            //
-            //
-            //
+            // クライアントがスーパーカー購入(SupercarClient.java:34)
+            // ディーラーがスーパーカーをオーダー(SupercarDealer.java:29)
+            // クライアントの要件が "steering wheel is like sea" であるため製造者がカタログキー"piari"でスーパーカーを製造(SupercarDealer.java:29)
+            // 製造者がステアリングホイールを製造(SupercarManufacturer.java:32)
+            // 製造者が特別ネジを製造(SupercarSteeringWheelManufacturer.java:39)
+            // specText が "\\(^_^)/" であるため SpecialScrewCannotMakeBySpecException がスロー(SpecialScrewManufacturer.java:28)
             // _/_/_/_/_/_/_/_/_/_/
         }
     }
