@@ -15,6 +15,12 @@
  */
 package org.docksidestage.javatry.colorbox;
 
+import java.util.Collection;
+import java.util.List;
+
+import org.docksidestage.bizfw.colorbox.ColorBox;
+import org.docksidestage.bizfw.colorbox.space.BoxSpace;
+import org.docksidestage.bizfw.colorbox.yours.YourPrivateRoom;
 import org.docksidestage.unit.PlainTestCase;
 
 /**
@@ -33,6 +39,15 @@ public class Step13NumberTest extends PlainTestCase {
      * (カラーボックの中に入っているInteger型で、0から54までの値は何個ある？)
      */
     public void test_countZeroToFiftyFour_IntegerOnly() {
+        List<ColorBox> colorBoxList = new YourPrivateRoom().getColorBoxList();
+        long count = colorBoxList.stream()
+                .map(ColorBox::getSpaceList)
+                .flatMap(Collection::stream)
+                .map(BoxSpace::getContent)
+                .filter(content -> content instanceof Integer)
+                .filter(content -> ((Integer) content).compareTo(0) < 0 && ((Integer) content).compareTo(54) > 0)
+                .count();
+        log("カラーボックの中に入っているInteger型で、0から54までの値の個数: " + count);
     }
 
     /**
