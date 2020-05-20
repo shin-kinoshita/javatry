@@ -50,7 +50,7 @@ public class Step41DependencyInjectionBeginnerTest extends PlainTestCase {
      * (NonDiDirectFirstAction と NonDiDirectSecondAction の違いは？)
      */
     public void test_nondi_difference_between_first_and_second() {
-        // your answer? => 
+        // your answer? => NonDiDirectSecondAction は NonDiDirectFirstAction のメソッド処理の前後に特定の別の処理を追加したものである。
         // and your confirmation code here freely
     }
 
@@ -59,7 +59,7 @@ public class Step41DependencyInjectionBeginnerTest extends PlainTestCase {
      * (NonDiDirectSecondAction と NonDiFactoryMethodAction の違いは？)
      */
     public void test_nondi_difference_between_second_and_FactoryMethod() {
-        // your answer? => 
+        // your answer? => NonDiFactoryMethodAction は Factory メソッドパターンを使う事で、別で処理を変更したいときにオーバーライドしやすい実装になっている（Animal, SupercarDealer など）
         // and your confirmation code here freely
     }
 
@@ -68,7 +68,7 @@ public class Step41DependencyInjectionBeginnerTest extends PlainTestCase {
      * (NonDiFactoryMethodAction と NonDiIndividualFactoryAction の違いは？)
      */
     public void test_nondi_difference_between_FactoryMethod_and_IndividualFactory() {
-        // your answer? => 
+        // your answer? => NonDiIndividualFactoryAction は Factory メソッドを別のクラスにうつす事で NonDiIndividualFactoryAction クラスの肥大化を抑える事ができる
         // and your confirmation code here freely
     }
 
@@ -141,7 +141,7 @@ public class Step41DependencyInjectionBeginnerTest extends PlainTestCase {
     /**
      * What is class or file of DI settings that defines MemberBhv class as DI component in the following Lasta Di application? <br>
      * (以下のLasta DiアプリケーションでMemberBhvクラスをDIコンポーネントとして定義しているDI設定クラスもしくはファイルは？) <br>
-     * 
+     *
      * https://github.com/lastaflute/lastaflute-example-harbor
      */
     public void test_zone_search_component_on_LastaDi() {
@@ -151,7 +151,7 @@ public class Step41DependencyInjectionBeginnerTest extends PlainTestCase {
     /**
      * What is class or file of DI settings that defines MemberBhv class as DI component in the following Spring application? <br>
      * (以下のSpringアプリケーションでMemberBhvクラスをDIコンポーネントとして定義しているDI設定クラスもしくはファイルは？) <br>
-     * 
+     *
      * https://github.com/dbflute-example/dbflute-example-on-springboot
      */
     public void test_zone_search_component_on_Spring() {
