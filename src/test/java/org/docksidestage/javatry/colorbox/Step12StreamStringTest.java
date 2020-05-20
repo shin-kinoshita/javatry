@@ -193,6 +193,25 @@ public class Step12StreamStringTest extends PlainTestCase {
      * (カラーボックスの中に入っているDevilBoxクラスのtextの長さの合計は？)
      */
     public void test_welcomeToDevil() {
+        List<ColorBox> colorBoxList = new YourPrivateRoom().getColorBoxList();
+        int sum = colorBoxList.stream()
+                .map(ColorBox::getSpaceList)
+                .flatMap(Collection::stream)
+                .map(BoxSpace::getContent)
+                .filter(content -> content instanceof YourPrivateRoom.DevilBox)
+                .peek(devilBox -> ((YourPrivateRoom.DevilBox) devilBox).wakeUp())
+                .peek(devilBox -> ((YourPrivateRoom.DevilBox) devilBox).allowMe())
+                .peek(devilBox -> ((YourPrivateRoom.DevilBox) devilBox).open())
+                .map(devilBox -> {
+                    try {
+                        return ((YourPrivateRoom.DevilBox) devilBox).getText();
+                    } catch (YourPrivateRoom.DevilBoxTextNotFoundException e) {
+                        return "";
+                    }
+                })
+                .mapToInt(str -> str.length())
+                .sum();
+        log("カラーボックスの中に入っているDevilBoxクラスのtextの長さの合計: " + sum);
     }
 
     // ===================================================================================
