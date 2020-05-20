@@ -15,9 +15,13 @@
  */
 package org.docksidestage.javatry.colorbox;
 
+import java.util.Collection;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 
 import org.docksidestage.bizfw.colorbox.ColorBox;
+import org.docksidestage.bizfw.colorbox.space.BoxSpace;
 import org.docksidestage.bizfw.colorbox.yours.YourPrivateRoom;
 import org.docksidestage.unit.PlainTestCase;
 
@@ -51,6 +55,20 @@ public class Step12StreamStringTest extends PlainTestCase {
      * (カラーボックスに入ってる文字列の中で、一番長い文字列は？)
      */
     public void test_length_findMax() {
+        List<ColorBox> colorBoxList = new YourPrivateRoom().getColorBoxList();
+        Optional<String> strLongest = colorBoxList.stream()
+                .map(ColorBox::getSpaceList)
+                .flatMap(Collection::stream)
+                .map(BoxSpace::getContent)
+                .filter(content -> content instanceof String)
+                .map(Object::toString)
+                .max(Comparator.comparingInt(String::length));
+
+        if (strLongest.isPresent()) {
+            log("カラーボックスに入っている文字列の中で、一番長い文字列: " + strLongest.get());
+        } else {
+            log("カラーボックスに文字列が入っていません。");
+        }
     }
 
     /**
@@ -74,6 +92,16 @@ public class Step12StreamStringTest extends PlainTestCase {
      * (カラーボックスに入ってる文字列の長さの合計は？)
      */
     public void test_length_calculateLengthSum() {
+        List<ColorBox> colorBoxList = new YourPrivateRoom().getColorBoxList();
+        int sum = colorBoxList.stream()
+                .map(ColorBox::getSpaceList)
+                .flatMap(Collection::stream)
+                .map(BoxSpace::getContent)
+                .filter(content -> content instanceof String)
+                .map(Object::toString)
+                .mapToInt(str -> str.length())
+                .sum();
+        log("カラーボックスに入ってる文字列の長さの合計: " + sum);
     }
 
     /**
@@ -81,6 +109,12 @@ public class Step12StreamStringTest extends PlainTestCase {
      * (カラーボックスの中で、色の名前が一番長いものは？)
      */
     public void test_length_findMaxColorSize() {
+        List<ColorBox> colorBoxList = new YourPrivateRoom().getColorBoxList();
+        String answer = colorBoxList.stream()
+                .map(colorBox -> colorBox.getColor().getColorName())
+                .max(Comparator.comparingInt(String::length))
+                .orElse("*not found");
+        log(answer);
     }
 
     // ===================================================================================
