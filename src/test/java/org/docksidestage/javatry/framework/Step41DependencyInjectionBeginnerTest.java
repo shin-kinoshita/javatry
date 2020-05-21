@@ -80,8 +80,13 @@ public class Step41DependencyInjectionBeginnerTest extends PlainTestCase {
      * (UsingDiAccessorAction と UsingDiAnnotationAction の違いは？)
      */
     public void test_usingdi_difference_between_Accessor_and_Annotation() {
-        // your answer? => 
+        // your answer? => UsingDiAccessorAction は setter で必要なオブジェクトをセットしているが、
+        // UsingDiAnnotationAction はアノテーションが付与されているフィールドに DiContainer がオブジェクトを注入するようにしている
         // and your confirmation code here freely
+        //        UsingDiAccessorAction usingDiAccessorAction = new UsingDiAccessorAction();
+        //        UsingDiAnnotationAction usingDiAnnotationAction = new UsingDiAnnotationAction();
+        //        SimpleDiContainer diContainer = SimpleDiContainer.getInstance();
+
     }
 
     /**
@@ -89,7 +94,7 @@ public class Step41DependencyInjectionBeginnerTest extends PlainTestCase {
      * (UsingDiAnnotationAction と UsingDiDelegatingAction の違いは？)
      */
     public void test_usingdi_difference_between_Annotation_and_Delegating() {
-        // your answer? => 
+        // your answer? => UsingDiDelegatingAction では DiContainer で注入したオブジェクトに関する処理を完全に UsingDiDelegatingLogic に委譲している
         // and your confirmation code here freely
     }
 
