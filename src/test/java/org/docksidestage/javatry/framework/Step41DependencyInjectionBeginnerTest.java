@@ -15,6 +15,16 @@
  */
 package org.docksidestage.javatry.framework;
 
+import org.docksidestage.bizfw.basic.objanimal.Animal;
+import org.docksidestage.bizfw.basic.objanimal.Dog;
+import org.docksidestage.bizfw.basic.supercar.SupercarDealer;
+import org.docksidestage.bizfw.di.container.SimpleDiContainer;
+import org.docksidestage.bizfw.di.nondi.NonDiDirectFirstAction;
+import org.docksidestage.bizfw.di.nondi.NonDiDirectSecondAction;
+import org.docksidestage.bizfw.di.nondi.NonDiFactoryMethodAction;
+import org.docksidestage.bizfw.di.nondi.NonDiIndividualFactoryAction;
+import org.docksidestage.bizfw.di.usingdi.*;
+import org.docksidestage.bizfw.di.usingdi.settings.UsingDiModule;
 import org.docksidestage.unit.PlainTestCase;
 
 /**
@@ -36,8 +46,8 @@ public class Step41DependencyInjectionBeginnerTest extends PlainTestCase {
         // _/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
         // What is Dependency Injection?
         // - - - - - (your answer?)
-        //
-        //
+        // 名前の通り、依存性の注入
+        // 一つのソフトウェアの設計パターンであり、依存関係を外部の設定ファイルなどから注入する事ができるようになる。
         //
         // _/_/_/_/_/_/_/_/_/_/
     }
@@ -52,6 +62,13 @@ public class Step41DependencyInjectionBeginnerTest extends PlainTestCase {
     public void test_nondi_difference_between_first_and_second() {
         // your answer? => NonDiDirectSecondAction は NonDiDirectFirstAction のメソッド処理の前後に特定の別の処理を追加したものである。
         // and your confirmation code here freely
+        log("## start NonDiDirectFirstAction methods");
+        NonDiDirectFirstAction nonDiDirectFirstAction = new NonDiDirectFirstAction();
+        nonDiDirectFirstAction.callFriend();
+
+        log("## start NonDiDirectSecondAction methods");
+        NonDiDirectSecondAction nonDiDirectSecondAction = new NonDiDirectSecondAction();
+        nonDiDirectSecondAction.callFriend();
     }
 
     /**
@@ -61,6 +78,13 @@ public class Step41DependencyInjectionBeginnerTest extends PlainTestCase {
     public void test_nondi_difference_between_second_and_FactoryMethod() {
         // your answer? => NonDiFactoryMethodAction は Factory メソッドパターンを使う事で、別で処理を変更したいときにオーバーライドしやすい実装になっている（Animal, SupercarDealer など）
         // and your confirmation code here freely
+        log("## start NonDiDirectSecondAction methods");
+        NonDiDirectSecondAction nonDiDirectSecondAction = new NonDiDirectSecondAction();
+        nonDiDirectSecondAction.callFriend();
+
+        log("## start nonDiFactoryMethodAction methods");
+        NonDiFactoryMethodAction nonDiFactoryMethodAction = new NonDiFactoryMethodAction();
+        nonDiFactoryMethodAction.callFriend();
     }
 
     /**
@@ -70,6 +94,13 @@ public class Step41DependencyInjectionBeginnerTest extends PlainTestCase {
     public void test_nondi_difference_between_FactoryMethod_and_IndividualFactory() {
         // your answer? => NonDiIndividualFactoryAction は Factory メソッドを別のクラスにうつす事で NonDiIndividualFactoryAction クラスの肥大化を抑える事ができる
         // and your confirmation code here freely
+        log("## start nonDiFactoryMethodAction methods");
+        NonDiFactoryMethodAction nonDiFactoryMethodAction = new NonDiFactoryMethodAction();
+        nonDiFactoryMethodAction.callFriend();
+
+        log("## start nonDiFactoryMethodAction methods");
+        NonDiIndividualFactoryAction nonDiIndividualFactoryAction = new NonDiIndividualFactoryAction();
+        nonDiIndividualFactoryAction.callFriend();
     }
 
     // ===================================================================================
@@ -83,10 +114,22 @@ public class Step41DependencyInjectionBeginnerTest extends PlainTestCase {
         // your answer? => UsingDiAccessorAction は setter で必要なオブジェクトをセットしているが、
         // UsingDiAnnotationAction はアノテーションが付与されているフィールドに DiContainer がオブジェクトを注入するようにしている
         // and your confirmation code here freely
-        //        UsingDiAccessorAction usingDiAccessorAction = new UsingDiAccessorAction();
-        //        UsingDiAnnotationAction usingDiAnnotationAction = new UsingDiAnnotationAction();
-        //        SimpleDiContainer diContainer = SimpleDiContainer.getInstance();
+        UsingDiAccessorAction usingDiAccessorAction = new UsingDiAccessorAction();
+        usingDiAccessorAction.setAnimal(new Dog());
+        usingDiAccessorAction.setSupercarDealer(new SupercarDealer());
+        usingDiAccessorAction.callFriend();
 
+        SimpleDiContainer diContainer = SimpleDiContainer.getInstance();
+        diContainer.registerModule(componentMap -> {
+            componentMap.put(UsingDiAnnotationAction.class, new UsingDiAnnotationAction());
+            componentMap.put(Animal.class, new Dog());
+            componentMap.put(SupercarDealer.class, new SupercarDealer());
+        });
+        diContainer.resolveDependency();
+
+        UsingDiAnnotationAction usingDiAnnotationAction =
+                ((UsingDiAnnotationAction) diContainer.getComponent(UsingDiAnnotationAction.class));
+        usingDiAnnotationAction.callFriend();
     }
 
     /**
@@ -96,6 +139,22 @@ public class Step41DependencyInjectionBeginnerTest extends PlainTestCase {
     public void test_usingdi_difference_between_Annotation_and_Delegating() {
         // your answer? => UsingDiDelegatingAction では DiContainer で注入したオブジェクトに関する処理を完全に UsingDiDelegatingLogic に委譲している
         // and your confirmation code here freely
+        SimpleDiContainer diContainer = SimpleDiContainer.getInstance();
+        diContainer.registerModule(componentMap -> {
+            componentMap.put(UsingDiAnnotationAction.class, new UsingDiAnnotationAction());
+            componentMap.put(UsingDiDelegatingAction.class, new UsingDiDelegatingAction());
+            componentMap.put(UsingDiDelegatingLogic.class, new UsingDiDelegatingLogic());
+            componentMap.put(Animal.class, new Dog());
+            componentMap.put(SupercarDealer.class, new SupercarDealer());
+        });
+        diContainer.resolveDependency();
+
+        UsingDiAnnotationAction usingDiAnnotationAction =
+                ((UsingDiAnnotationAction) diContainer.getComponent(UsingDiAnnotationAction.class));
+        UsingDiDelegatingAction usingDiDelegatingAction =
+                ((UsingDiDelegatingAction) diContainer.getComponent(UsingDiDelegatingAction.class));
+        usingDiAnnotationAction.callFriend();
+        usingDiDelegatingAction.callFriend();
     }
 
     // ===================================================================================
@@ -107,6 +166,16 @@ public class Step41DependencyInjectionBeginnerTest extends PlainTestCase {
      */
     public void test_usingdi_UsingDiWebFrameworkProcess_callfriend_accessor() {
         // execution code here
+        UsingDiAccessorAction action = new UsingDiAccessorAction();
+        action.setAnimal(new Dog());
+        action.setSupercarDealer(new SupercarDealer());
+
+        SimpleDiContainer diContainer = SimpleDiContainer.getInstance();
+        diContainer.registerModule(componentMap -> componentMap.put(UsingDiAccessorAction.class, action));
+        diContainer.resolveDependency();
+
+        UsingDiWebFrameworkProcess process = new UsingDiWebFrameworkProcess();
+        process.requestAccessorCallFriend();
     }
 
     /**
@@ -117,6 +186,19 @@ public class Step41DependencyInjectionBeginnerTest extends PlainTestCase {
      */
     public void test_usingdi_UsingDiWebFrameworkProcess_callfriend_annotation_delegating() {
         // execution code here
+        SimpleDiContainer diContainer = SimpleDiContainer.getInstance();
+        diContainer.registerModule(componentMap -> {
+            componentMap.put(UsingDiAnnotationAction.class, new UsingDiAnnotationAction());
+            componentMap.put(UsingDiDelegatingAction.class, new UsingDiDelegatingAction());
+            componentMap.put(UsingDiDelegatingLogic.class, new UsingDiDelegatingLogic());
+            componentMap.put(Animal.class, new Dog());
+            componentMap.put(SupercarDealer.class, new SupercarDealer());
+        });
+        diContainer.resolveDependency();
+
+        UsingDiWebFrameworkProcess process = new UsingDiWebFrameworkProcess();
+        process.requestAnnotationCallFriend();
+        process.requestDelegatingCallFriend();
     }
 
     /**
@@ -124,8 +206,15 @@ public class Step41DependencyInjectionBeginnerTest extends PlainTestCase {
      * (UsingDiAnnotationAction のインスタンス変数 "animal" の実体クラスは？ (UsingDiModuleを登録した時))
      */
     public void test_usingdi_whatis_animal() {
-        // your answer? => 
+        // your answer? => TooLazyDog
         // and your confirmation code here freely
+        SimpleDiContainer diContainer = SimpleDiContainer.getInstance();
+        diContainer.registerModule(new UsingDiModule());
+        diContainer.resolveDependency();
+
+        UsingDiAnnotationAction usingDiAnnotationAction =
+                ((UsingDiAnnotationAction) diContainer.getComponent(UsingDiAnnotationAction.class));
+        usingDiAnnotationAction.callFriend();
     }
 
     // ===================================================================================
